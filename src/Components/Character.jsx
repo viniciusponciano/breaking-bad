@@ -1,47 +1,65 @@
 import React from 'react';
 
-const Character = ({ info }) => (
-  <div style={{ padding: '5%', position: 'relative' }}>
-    <div style={{
-      float: 'right',
-      position: 'absolute',
-      right: '5%',
-      top: '6%',
-      zIndex: '10',
-      backgroundColor: info.status === 'Alive' ? 'green' : 'red',
-      padding: '5px',
-      color: 'white',
-    }}
-    >
-      {info.status}
+const style = {
+  container: {
+    padding: '5%',
+    position: 'relative',
+  },
+  character: (isAlive) => ({
+    float: 'right',
+    position: 'absolute',
+    right: '5%',
+    top: '6%',
+    zIndex: '10',
+    backgroundColor: isAlive ? 'green' : 'red',
+    padding: '5px',
+    color: 'white',
+  }),
+  image: {
+    justifySelf: 'center',
+    height: '100%',
+    width: '100%',
+    objectFit: 'cover',
+  },
+  summary: {
+    float: 'left',
+    position: 'absolute',
+    left: '10%',
+    bottom: '0',
+    zIndex: '10',
+    backgroundColor: 'transparent',
+    marginRight: '10%',
+    color: 'white',
+    textAlign: 'left',
+    textShadow: '1px 1px black',
+    height: '40%',
+  },
+};
+
+const Character = ({
+  status,
+  img,
+  nickname,
+  name,
+  birthday,
+  occupation = [],
+}) => (
+  <div style={style.container}>
+    <div style={style.character(status === 'Alive')}>
+      {status === 'Alive' ? 'Vivo' : 'Morto'}
     </div>
     <img
-      src={info.img}
-      alt={`img of ${info.nickname}`}
-      style={{
-        justifySelf: 'center',
-        height: '100%',
-        width: '100%',
-        objectFit: 'cover',
-      }}
+      src={img}
+      alt={`Imagem de ${nickname}`}
+      style={style.image}
     />
-    <div style={{
-      float: 'left',
-      position: 'absolute',
-      left: '10%',
-      bottom: '5%',
-      zIndex: '10',
-      backgroundColor: 'transparent',
-      color: 'white',
-      textAlign: 'left',
-    }}
-    >
-      <h4>{info.name}</h4>
+    <div style={style.summary}>
+      <h4>{name}</h4>
       <p>
         <span>&#8902;</span>
-        {info.birthday}
+        {birthday}
       </p>
-      <p>{info.occupation.join(', ')}</p>
+      <p>{occupation.join(', ')}</p>
     </div>
   </div>
 );

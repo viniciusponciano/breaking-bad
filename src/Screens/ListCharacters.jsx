@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Character from '../Components/Character';
+
 import { getCharacters } from '../Controllers/characters';
+
+import Header from '../Components/Header';
+import Loading from '../Components/Loading';
+import CharacterGrid from '../Components/CharacterGrid';
+import ButtonGroup from '../Components/ButtonGroup';
+import Button from '../Components/Button';
 
 const ListCharacters = () => {
   const [state, setState] = useState({
@@ -39,36 +45,24 @@ const ListCharacters = () => {
     setState({ ...state, offset, loading });
   };
 
-  const handleSearchName = (event) => setState({ ...state, search: event.target.value });
+  const handleSearchName = (search) => setState({ ...state, search });
 
   const nameSearch = (character) => character.name.toLowerCase()
     .includes(state.search.toLowerCase());
 
-  const renderCharacter = (character) => (
-    <Character key={character.char_id} info={character} />
-  );
-
   return (
     <>
-      <input type="search" value={state.search} onChange={handleSearchName} />
-      {state.loading && <h1 style={{ color: 'white' }}>Loading...</h1>}
-      {!state.loading && (
-      <div style={{
-        padding: '2% 10%',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 25%)',
-        gridAutoRows: '350px',
-      }}
-      >
-        {state.characters
-          .filter(nameSearch)
-          .map(renderCharacter)}
-      </div>
-      )}
-      <div style={{ clear: 'left' }}>
-        <button type="button" onClick={previousPage}>Anterior</button>
-        <button type="button" onClick={nextPage}>Posterior</button>
-      </div>
+      <Header
+        title={state.search ? `Você pesquisou por "${state.search}"` : 'Personagens'}
+        onSearch={handleSearchName}
+        searchValue={state.search}
+      />
+      {state.loading && <Loading />}
+      {!state.loading && <CharacterGrid characters={state.characters.filter(nameSearch)} />}
+      <ButtonGroup>
+        <Button label="Anterior" onClick={previousPage} />
+        <Button label="Próxima" onClick={nextPage} />
+      </ButtonGroup>
     </>
   );
 };

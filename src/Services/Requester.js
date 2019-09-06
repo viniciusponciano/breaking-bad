@@ -26,4 +26,4 @@ export default class Requester {
   }
 }
 
-export const requester = new Requester('https://www.breakingbadapi.com/api/')
+export const requester = new Requester('https://www.breakingbadapi.com/api/');
