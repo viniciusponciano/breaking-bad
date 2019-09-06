@@ -14,6 +14,7 @@ export default class Requester {
   get(endpoint) {
     const serviceUrl = `${this.baseUrl}${endpoint}${this.params}`;
     const configuration = { method: 'GET' };
+    console.log('=>', serviceUrl)
     return fetch(serviceUrl, configuration)
       .then(async (response) => {
         if (response.ok) {
@@ -25,3 +26,5 @@ export default class Requester {
       });
   }
 }
+
+export const requester = new Requester('https://www.breakingbadapi.com/api/')
