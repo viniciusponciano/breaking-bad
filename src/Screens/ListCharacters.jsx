@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Character from '../Components/Character';
 import { getCharacters } from '../Controllers/characters';
 
 const ListCharacters = () => {
@@ -30,10 +31,14 @@ const ListCharacters = () => {
 
   return (
     <>
-      {state.characters
-        .map((character) => <div key={character.char_id}>{JSON.stringify(character)}</div>)}
-      <button type="button" onClick={previousPage}>Anterior</button>
-      <button type="button" onClick={nextPage}>Posterior</button>
+      <div style={{ padding: '2% 10%', display: 'grid', gridTemplateColumns: 'repeat(4, 25%)', gridAutoRows: '350px' }}>
+        {state.characters
+          .map((character) => <Character key={character.char_id} info={character} />)}
+      </div>
+      <div style={{ clear: 'left' }}>
+        <button type="button" onClick={previousPage}>Anterior</button>
+        <button type="button" onClick={nextPage}>Posterior</button>
+      </div>
     </>
   );
 };
